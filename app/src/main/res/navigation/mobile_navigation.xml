@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.exercise4.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_swipe_views"
+        android:name="com.example.exercise4.SwipeViewsFragment"
+        android:label="@string/menu_swipe_views"
+        tools:layout="@layout/fragment_swipe_views" />
+    <fragment
+        android:id="@+id/nav_recycler_view"
+        android:name="com.example.exercise4.ListFragment"
+        android:label="@string/menu_recycler_view"
+        tools:layout="@layout/fragment_recycler_view_list" />
+
+    <fragment
+        android:id="@+id/nav_swipe_images"
+        android:name="com.example.exercise4.SwipeImagesFragment"
+        android:label="@string/menu_swipe_images"
+        tools:layout="@layout/fragment_swipe_images" />
+</navigation>
