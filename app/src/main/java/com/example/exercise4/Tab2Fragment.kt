@@ -2,6 +2,8 @@ package com.example.exercise4
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,16 +28,32 @@ class Tab2Fragment : Fragment() {
         val author = data.getString("author", "Krzysztof Otreba")
         val authorText = view.findViewById<View>(R.id.authorText) as TextView
         authorText.text = author
-        welcomeText.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
-            editor.putString("welcome", welcomeText.text.toString())
-            editor.commit()
-            false
+        welcomeText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                editor.putString("welcome", editable.toString())
+                editor.apply()
+            }
         })
-        authorText.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
-            editor.putString("author", authorText.text.toString())
-            editor.commit()
-            false
+
+        authorText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                editor.putString("author", editable.toString())
+                editor.apply()
+            }
         })
+
     }
 
     override fun onCreateView(

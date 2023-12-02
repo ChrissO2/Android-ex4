@@ -4,6 +4,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.green
+import androidx.core.graphics.red
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exercise4.ChampionModel
 import com.example.exercise4.Lane
@@ -13,6 +16,13 @@ import com.example.exercise4.R
 class CustomAdapter(private val mList: MutableList<ChampionModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
     private val MAX_TEXT_LENGTH = 25
     private var onClickListener: OnClickListener? = null
+    private var onLongClickListener: OnLongClickListener? = null
+
+    fun setOnLongClickListener(onLongClickListener: OnLongClickListener) {
+        this.onLongClickListener = onLongClickListener
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.card_view_design, parent, false)
@@ -54,6 +64,19 @@ class CustomAdapter(private val mList: MutableList<ChampionModel>) : RecyclerVie
             }
         }
 
+        holder.itemView.setOnLongClickListener {
+            onLongClickListener?.onLongClick(position, ItemsViewModel)
+            return@setOnLongClickListener true
+        }
+        if (ItemsViewModel.rating <= 2.5) {
+            val greenColor = ContextCompat.getColor(holder.itemView.context, R.color.green)
+            holder.itemView.setBackgroundColor(greenColor)
+        } else {
+            val redColor = ContextCompat.getColor(holder.itemView.context, R.color.red)
+            holder.itemView.setBackgroundColor(redColor)
+        }
+
+
     }
 
     override fun getItemCount(): Int {
@@ -76,6 +99,10 @@ class CustomAdapter(private val mList: MutableList<ChampionModel>) : RecyclerVie
 
     interface OnClickListener {
         fun onClick(position: Int, champion: ChampionModel)
+    }
+
+    interface OnLongClickListener {
+        fun onLongClick(position: Int, champion: ChampionModel)
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {

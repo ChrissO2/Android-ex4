@@ -1,6 +1,7 @@
 package com.example.exercise4
 
 import CustomAdapter
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -66,8 +67,6 @@ class ListFragment : Fragment() {
             addChampion(champion)
         }
         else if(resultCode == AppCompatActivity.RESULT_OK && requestCode == 2) {
-//            val champion = data?.getSerializableExtra("champion") as ChampionModel
-//            deleteChampion(champion)
             val champion = data?.getSerializableExtra("champion") as? ChampionModel
             champion?.let {
                 deleteChampion(it)
@@ -94,12 +93,34 @@ class ListFragment : Fragment() {
                 startActivityForResult(intent, 2)
             }
         })
+        adapter.setOnLongClickListener(object : CustomAdapter.OnLongClickListener {
+            override fun onLongClick(position: Int, champion: ChampionModel) {
+                showDeleteConfirmationDialog(champion)
+            }
+        })
         val button = view.findViewById<FloatingActionButton>(R.id.addChampionActionButton)
         button.setOnClickListener {
             val intent = Intent(requireContext(), ChampionAddActivity::class.java)
             startActivityForResult(intent, 1)
         }
-}
+
+
+    }
+
+    private fun showDeleteConfirmationDialog(champion: ChampionModel) {
+        val alertDialog = AlertDialog.Builder(requireContext())
+        alertDialog.setTitle("Delete Champion")
+        alertDialog.setMessage("Are you sure you want to delete ${champion.name}?")
+
+        alertDialog.setPositiveButton("Yes") { _, _ ->
+            deleteChampion(champion)
+        }
+
+        alertDialog.setNegativeButton("No") { _, _ ->
+        }
+
+        alertDialog.show()
+    }
 
     companion object {
         const val ARG_COLUMN_COUNT = "column-count"
@@ -113,3 +134,4 @@ class ListFragment : Fragment() {
             }
     }
 }
+
