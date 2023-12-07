@@ -41,13 +41,14 @@ class ChampionRepository(conext: Context) {
     init {
         db = ChampionDB.getDatabase(conext)!!
         championDao = db?.championDao()!!
-//        dataList = championDao?.getAllData()
-        addItem(Champion("Aatrox", "The Darkin Blade", Lane.TOP, 3.0f))
-        addItem(Champion("Ahri", "The Nine-Tailed Fox", Lane.MID, 3.0f))
-        addItem(Champion("Akali", "The Rogue Assassin", Lane.MID, 3.0f))
-        addItem(Champion("Alistar", "The Minotaur", Lane.SUPPORT, 3.0f))
-        addItem(Champion("Amumu", "The Sad Mummy", Lane.JUNGLE, 3.0f))
-        addItem(Champion("Anivia", "The Cryophoenix", Lane.MID, 3.0f))
-        addItem(Champion("Annie", "The Dark Child", Lane.MID, 3.0f))
+        dataList = championDao?.getAllData()
+//        addItem(Champion("Aatrox", "The Darkin Blade", Lane.TOP, 3.0f))
+//        addItem(Champion("Ahri", "The Nine-Tailed Fox", Lane.MID, 3.0f))
+//        addItem(Champion("Akali", "The Rogue Assassin", Lane.MID, 3.0f))
+//        addItem(Champion("Alistar", "The Minotaur", Lane.SUPPORT, 3.0f))
+//        addItem(Champion("Amumu", "The Sad Mummy", Lane.JUNGLE, 3.0f))
+//        addItem(Champion("Anivia", "The Cryophoenix", Lane.MID, 3.0f))
+//        addItem(Champion("Annie", "The Dark Child", Lane.MID, 3.0f))
     }
+
 }

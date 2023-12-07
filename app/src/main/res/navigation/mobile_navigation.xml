@@ -34,10 +34,18 @@
         <action
             android:id="@+id/action_listChampionFragment_to_championAddDbFragment"
             app:destination="@id/championAddDbFragment" />
+        <action
+            android:id="@+id/action_listChampionFragment_to_championDetailFragment"
+            app:destination="@id/championDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/championAddDbFragment"
         android:name="com.example.exercise4.ChampionAddDbFragment"
         android:label="ChampionAddDbFragment" />
+    <fragment
+        android:id="@+id/championDetailFragment"
+        android:name="com.example.exercise4.ChampionDetailFragment"
+        android:label="fragment_champion_detail"
+        tools:layout="@layout/fragment_champion_detail" />
 
 </navigation>

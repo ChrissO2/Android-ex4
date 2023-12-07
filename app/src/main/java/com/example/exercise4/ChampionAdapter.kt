@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exercise4.data.Champion
 import com.example.exercise4.data.ChampionRepository
@@ -59,6 +62,9 @@ class ChampionAdapter(var data: MutableList<Champion>, var dataRepo: ChampionRep
         holder.itemView.setOnClickListener {
             if(onClickListener != null){
                 onClickListener!!.onClick(position, ItemsViewModel)
+
+//                val action = R.id.action_nav_recycler_view_db_to_championDetailFragment
+//                holder.itemView.findNavController().navigate(action)
             }
         }
 

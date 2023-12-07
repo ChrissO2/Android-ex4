@@ -4,6 +4,7 @@ import CustomAdapter
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import com.example.exercise4.data.Champion
 import com.example.exercise4.data.ChampionRepository
 import com.example.exercise4.databinding.FragmentListChampionBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -36,11 +38,6 @@ class ListChampionFragment : Fragment() {
         dataRepo = ChampionRepository(requireContext())
         adapter = ChampionAdapter(dataRepo.getAllData()!!, dataRepo)
 
-//        parentFragmentManager.setFragmentResultListener("item_added", this){
-//            requestKey, _ ->
-//                adapter.data = dataRepo.getAllData()!!
-//                adapter.notifyDataSetChanged()
-//        }
 
         parentFragmentManager.setFragmentResultListener("item_added", this) { _, _ ->
             GlobalScope.launch(Dispatchers.Main) {
@@ -53,16 +50,6 @@ class ListChampionFragment : Fragment() {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
     }
-
-//    fun addChampion(champion: ChampionModel) {
-//        val adapter = recyclerview.adapter as CustomAdapter
-//        adapter.addChampion(champion)
-//    }
-//
-//    fun deleteChampion(champion: ChampionModel) {
-//        val adapter = recyclerview.adapter as CustomAdapter
-//        adapter.deleteChampion(champion)
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,22 +66,11 @@ class ListChampionFragment : Fragment() {
                 }
             }
         }
-
         return view
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        if(resultCode == AppCompatActivity.RESULT_OK && requestCode == 1) {
-//            val champion = data?.getSerializableExtra("champion") as ChampionModel
-//            addChampion(champion)
-//        }
-//        else if(resultCode == AppCompatActivity.RESULT_OK && requestCode == 2) {
-//            val champion = data?.getSerializableExtra("champion") as? ChampionModel
-//            champion?.let {
-//                deleteChampion(it)
-//            }
-//        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,7 +90,17 @@ class ListChampionFragment : Fragment() {
             findNavController().navigate(R.id.action_listChampionFragment_to_championAddDbFragment)
         }
 
+        adapter.setOnClickListener(object : ChampionAdapter.OnClickListener {
+            override fun onClick(position: Int, champion: Champion) {
+                val bundle = Bundle()
+                bundle.putString("name", champion.name)
+                bundle.putString("description", champion.description)
+                bundle.putInt("lane", champion.lane)
+                bundle.putFloat("rating", champion.rating)
 
+                findNavController().navigate(R.id.action_listChampionFragment_to_championDetailFragment, bundle)
+            }
+        })
     }
 
     private fun showDeleteConfirmationDialog(champion: ChampionModel) {
