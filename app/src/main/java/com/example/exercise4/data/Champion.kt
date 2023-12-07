@@ -2,9 +2,11 @@ package com.example.exercise4.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
+
 
 @Entity(tableName = "champion_table")
-class Champion {
+class Champion : Serializable {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
     var name: String = ""

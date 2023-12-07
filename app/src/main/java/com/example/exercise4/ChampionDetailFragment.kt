@@ -16,9 +16,11 @@ import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.exercise4.data.Champion
+import com.example.exercise4.data.ChampionRepository
 
 class ChampionDetailFragment : Fragment() {
     lateinit var binding: FragmentChampionDetailBinding
+    private lateinit var dataRepo: ChampionRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +51,36 @@ class ChampionDetailFragment : Fragment() {
             4 -> binding.radioButtonSupp.isChecked = true
         }
 
+        binding.updateSaveButton.setOnClickListener {
+            onSaveButtonClick()
+        }
+    }
+
+    private fun onSaveButtonClick() {
+        dataRepo = ChampionRepository.getInstance(requireContext())!!
+        val championId = arguments?.getInt("id")
+        if (championId != null) {
+            val champion = dataRepo.getItemById(championId)
+            champion?.apply {
+                this.name = binding.updateName.text.toString()
+                this.description = binding.updateDesc.text.toString()
+                this.rating = binding.updateRating.rating
+                val selectedLaneId = binding.radioGroup2.checkedRadioButtonId
+                when (selectedLaneId) {
+                    R.id.radioButtonTop -> this.lane = 0
+                    R.id.radioButtonJg -> this.lane = 1
+                    R.id.radioButtonMid -> this.lane = 2
+                    R.id.radioButtonBot -> this.lane = 3
+                    R.id.radioButtonSupp -> this.lane = 4
+                    else -> this.lane = 0
+                }
+                dataRepo.updateItem(this)
+                Toast.makeText(requireContext(), "Item updated in the database", Toast.LENGTH_SHORT).show()
+//                parentFragmentManager.setFragmentResult("item_updated", Bundle.EMPTY)
+                parentFragmentManager.setFragmentResult("item_added", Bundle.EMPTY)
+                findNavController().navigateUp()
+            }
+        }
     }
 
     companion object {

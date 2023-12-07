@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.recreate
 import androidx.navigation.fragment.findNavController
 import com.example.exercise4.data.Champion
 import com.example.exercise4.data.ChampionRepository
@@ -76,9 +77,6 @@ class ListChampionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val recView = view.findViewById<RecyclerView>(R.id.recyclerviewdb)
-//        recView.layoutManager = LinearLayoutManager(requireContext())
-//        recView.adapter = adapter
         recyclerview = view.findViewById(R.id.recyclerviewdb)
         recyclerview.layoutManager = LinearLayoutManager(requireContext())
         recyclerview.adapter = adapter
@@ -97,8 +95,10 @@ class ListChampionFragment : Fragment() {
                 bundle.putString("description", champion.description)
                 bundle.putInt("lane", champion.lane)
                 bundle.putFloat("rating", champion.rating)
+                bundle.putInt("id", champion.id)
 
                 findNavController().navigate(R.id.action_listChampionFragment_to_championDetailFragment, bundle)
+
             }
         })
     }

@@ -38,6 +38,15 @@ class ChampionRepository(conext: Context) {
         return true
     }
 
+    fun updateItem(item: Champion) : Boolean {
+        championDao?.update(item)
+        return true
+    }
+
+    fun getItemById(itemId: Int): Champion? {
+        return championDao?.getItemById(itemId)
+    }
+
     init {
         db = ChampionDB.getDatabase(conext)!!
         championDao = db?.championDao()!!

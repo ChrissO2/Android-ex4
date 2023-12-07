@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_listChampionFragment_to_championDetailFragment"
             app:destination="@id/championDetailFragment" />
+        <argument
+            android:name="currentChampion"
+            app:argType="com.example.exercise4.data.Champion" />
     </fragment>
     <fragment
         android:id="@+id/championAddDbFragment"

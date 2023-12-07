@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface ChampionDao {
@@ -19,4 +20,10 @@ interface ChampionDao {
 
     @Delete
     fun delete(item: Champion) : Int
+
+    @Query("SELECT * FROM champion_table WHERE id = :itemId")
+    fun getItemById(itemId: Int): Champion?
+
+    @Update
+    fun update(champion: Champion) : Int
 }
