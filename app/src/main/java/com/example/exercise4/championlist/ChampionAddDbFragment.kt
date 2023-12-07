@@ -1,4 +1,4 @@
-package com.example.exercise4
+package com.example.exercise4.championlist
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.exercise4.R
 import com.example.exercise4.data.Champion
 import com.example.exercise4.data.ChampionRepository
 import com.example.exercise4.databinding.FragmentChampionAddDbBinding

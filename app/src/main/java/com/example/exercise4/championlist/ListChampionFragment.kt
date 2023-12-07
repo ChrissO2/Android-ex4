@@ -1,10 +1,8 @@
-package com.example.exercise4
+package com.example.exercise4.championlist
 
-import CustomAdapter
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.recreate
 import androidx.navigation.fragment.findNavController
+import com.example.exercise4.ChampionModel
+import com.example.exercise4.ListFragment
+import com.example.exercise4.R
 import com.example.exercise4.data.Champion
 import com.example.exercise4.data.ChampionRepository
 import com.example.exercise4.databinding.FragmentListChampionBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -97,7 +95,8 @@ class ListChampionFragment : Fragment() {
                 bundle.putFloat("rating", champion.rating)
                 bundle.putInt("id", champion.id)
 
-                findNavController().navigate(R.id.action_listChampionFragment_to_championDetailFragment, bundle)
+//                findNavController().navigate(R.id.action_listChampionFragment_to_championDetailFragment, bundle)
+                findNavController().navigate(R.id.action_nav_recycler_view_db_to_detailRealFragment, bundle)
 
             }
         })

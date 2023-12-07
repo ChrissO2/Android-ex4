@@ -1,21 +1,15 @@
-package com.example.exercise4
+package com.example.exercise4.championlist
 
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.navArgs
-import com.example.exercise4.databinding.FragmentChampionAddDbBinding
 import com.example.exercise4.databinding.FragmentChampionDetailBinding
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.example.exercise4.data.Champion
+import com.example.exercise4.R
 import com.example.exercise4.data.ChampionRepository
 
 class ChampionDetailFragment : Fragment() {
@@ -39,10 +33,18 @@ class ChampionDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.updateName.text = Editable.Factory.getInstance().newEditable(arguments?.getString("name"))
-        binding.updateDesc.text = Editable.Factory.getInstance().newEditable(arguments?.getString("description"))
-        binding.updateRating.rating = arguments?.getFloat("rating")!!
-        var lane = arguments?.getInt("lane")
+        dataRepo = ChampionRepository.getInstance(requireContext())!!
+        val championId = arguments?.getInt("id")
+        val champion = dataRepo.getItemById(championId!!)
+        var name = champion?.name!!
+        var description = champion?.description!!
+        var lane = champion?.lane!!
+        var rating = champion?.rating!!
+
+        binding.updateName.text = Editable.Factory.getInstance().newEditable(name)
+        binding.updateDesc.text = Editable.Factory.getInstance().newEditable(description)
+        binding.updateRating.rating = rating!!
+
         when (lane) {
             0 -> binding.radioButtonTop.isChecked = true
             1 -> binding.radioButtonJg.isChecked = true
@@ -54,10 +56,13 @@ class ChampionDetailFragment : Fragment() {
         binding.updateSaveButton.setOnClickListener {
             onSaveButtonClick()
         }
+
+        binding.updateCancelBtn.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun onSaveButtonClick() {
-        dataRepo = ChampionRepository.getInstance(requireContext())!!
         val championId = arguments?.getInt("id")
         if (championId != null) {
             val champion = dataRepo.getItemById(championId)

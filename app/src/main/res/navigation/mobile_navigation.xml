@@ -28,8 +28,8 @@
         tools:layout="@layout/fragment_swipe_images" />
     <fragment
         android:id="@+id/nav_recycler_view_db"
-        android:name="com.example.exercise4.ListChampionFragment"
-        android:label="ListChampionFragment"
+        android:name="com.example.exercise4.championlist.ListChampionFragment"
+        android:label="Lol Champions"
         tools:layout="@layout/fragment_list_champion">
         <action
             android:id="@+id/action_listChampionFragment_to_championAddDbFragment"
@@ -37,18 +37,26 @@
         <action
             android:id="@+id/action_listChampionFragment_to_championDetailFragment"
             app:destination="@id/championDetailFragment" />
-        <argument
-            android:name="currentChampion"
-            app:argType="com.example.exercise4.data.Champion" />
+        <action
+            android:id="@+id/action_nav_recycler_view_db_to_detailRealFragment"
+            app:destination="@id/detailRealFragment" />
     </fragment>
     <fragment
         android:id="@+id/championAddDbFragment"
-        android:name="com.example.exercise4.ChampionAddDbFragment"
-        android:label="ChampionAddDbFragment" />
+        android:name="com.example.exercise4.championlist.ChampionAddDbFragment"
+        android:label="Add champion" />
     <fragment
         android:id="@+id/championDetailFragment"
-        android:name="com.example.exercise4.ChampionDetailFragment"
-        android:label="fragment_champion_detail"
+        android:name="com.example.exercise4.championlist.ChampionDetailFragment"
+        android:label="Edit champion"
         tools:layout="@layout/fragment_champion_detail" />
+    <fragment
+        android:id="@+id/detailRealFragment"
+        android:name="com.example.exercise4.DetailRealFragment"
+        android:label="Champion details" >
+        <action
+            android:id="@+id/action_detailRealFragment_to_championDetailFragment"
+            app:destination="@id/championDetailFragment" />
+    </fragment>
 
 </navigation>

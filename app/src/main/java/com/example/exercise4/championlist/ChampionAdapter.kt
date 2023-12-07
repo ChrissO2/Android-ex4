@@ -1,4 +1,4 @@
-package com.example.exercise4
+package com.example.exercise4.championlist
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.exercise4.Lane
+import com.example.exercise4.R
 import com.example.exercise4.data.Champion
 import com.example.exercise4.data.ChampionRepository
 
@@ -37,19 +35,19 @@ class ChampionAdapter(var data: MutableList<Champion>, var dataRepo: ChampionRep
         val ItemsViewModel = data[position]
 
         when(ItemsViewModel.lane){
-            Lane.TOP->{
+            Lane.TOP ->{
                 holder.imageView.setImageResource(R.drawable.top_icon)
             }
-            Lane.JUNGLE->{
+            Lane.JUNGLE ->{
                 holder.imageView.setImageResource(R.drawable.jungle_icon)
             }
-            Lane.MID->{
+            Lane.MID ->{
                 holder.imageView.setImageResource(R.drawable.mid_icon)
             }
-            Lane.BOTTOM->{
+            Lane.BOTTOM ->{
                 holder.imageView.setImageResource(R.drawable.adc_icon)
             }
-            Lane.SUPPORT->{
+            Lane.SUPPORT ->{
                 holder.imageView.setImageResource(R.drawable.support_icon)
             }
         }

@@ -1,59 +1,94 @@
 package com.example.exercise4
 
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.exercise4.data.ChampionRepository
+import com.example.exercise4.databinding.FragmentDetailRealBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailRealFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DetailRealFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentDetailRealBinding
+    private lateinit var dataRepo: ChampionRepository
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_real, container, false)
+        binding = FragmentDetailRealBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dataRepo = ChampionRepository.getInstance(requireContext())!!
+
+        val championId = arguments?.getInt("id")
+        if (championId != null) {
+            val champion = dataRepo.getItemById(championId)
+            val name = champion?.name
+            val description = champion?.description
+            val lane = champion?.lane
+            val rating = champion?.rating
+
+            binding.textViewName.text = Editable.Factory.getInstance().newEditable(name)
+            binding.textViewDescription.text = Editable.Factory.getInstance().newEditable(description)
+            binding.ratingBarRating.rating = rating?.toFloat()!!
+            when (lane) {
+                0 -> {
+                    binding.textViewLine.text = Editable.Factory.getInstance().newEditable("Top")
+                    binding.imageViewLine.setImageResource(R.drawable.top_icon)
+                }
+                1 -> {
+                    binding.textViewLine.text = Editable.Factory.getInstance().newEditable("Jungle")
+                    binding.imageViewLine.setImageResource(R.drawable.jungle_icon)
+                }
+                2 -> {
+                    binding.textViewLine.text = Editable.Factory.getInstance().newEditable("Mid")
+                    binding.imageViewLine.setImageResource(R.drawable.mid_icon)
+                }
+                3 -> {
+                    binding.textViewLine.text = Editable.Factory.getInstance().newEditable("Bot")
+                    binding.imageViewLine.setImageResource(R.drawable.adc_icon)
+                }
+                4 -> {
+                    binding.textViewLine.text = Editable.Factory.getInstance().newEditable("Support")
+                    binding.imageViewLine.setImageResource(R.drawable.support_icon)
+                }
+                else -> {
+                    binding.textViewLine.text = Editable.Factory.getInstance().newEditable("Top")
+                    binding.imageViewLine.setImageResource(R.drawable.top_icon)
+                }
+            }
+        }
+
+        binding.buttonReturn.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
+        binding.buttonModify.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putInt("id", championId!!)
+            findNavController().navigate(R.id.action_detailRealFragment_to_championDetailFragment, bundle)
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailRealFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             DetailRealFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+                arguments = Bundle().apply {}
             }
     }
 }
