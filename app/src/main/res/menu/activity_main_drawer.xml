@@ -18,6 +18,11 @@
             android:icon="@drawable/icon_game"
             android:title="@string/menu_recycler_view" />
 
+        <item
+            android:id="@+id/nav_recycler_view_db"
+            android:icon="@drawable/icon_game"
+            android:title= "DB recycler view" />
+
 <!--        <item-->
 <!--            android:id="@+id/nav_swipe_images"-->
 <!--            android:icon="@drawable/icon_image"-->

@@ -26,4 +26,18 @@
         android:name="com.example.exercise4.SwipeImagesFragment"
         android:label="@string/menu_swipe_images"
         tools:layout="@layout/fragment_swipe_images" />
+    <fragment
+        android:id="@+id/nav_recycler_view_db"
+        android:name="com.example.exercise4.ListChampionFragment"
+        android:label="ListChampionFragment"
+        tools:layout="@layout/fragment_list_champion">
+        <action
+            android:id="@+id/action_listChampionFragment_to_championAddDbFragment"
+            app:destination="@id/championAddDbFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/championAddDbFragment"
+        android:name="com.example.exercise4.ChampionAddDbFragment"
+        android:label="ChampionAddDbFragment" />
+
 </navigation>
