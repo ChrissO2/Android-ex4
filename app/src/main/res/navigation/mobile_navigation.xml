@@ -89,6 +89,10 @@
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.example.exercise4.livedata.UpdateFragment"
-        android:label="UpdateFragment" />
+        android:label="UpdateFragment" >
+        <action
+            android:id="@+id/action_updateFragment_to_nav_list_view_db"
+            app:destination="@id/nav_list_view_db" />
+    </fragment>
 
 </navigation>

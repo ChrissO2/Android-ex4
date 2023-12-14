@@ -40,7 +40,7 @@ class DetailsFragment : Fragment() {
         var description = bundle!!.getString("description", "No description")
         var lane = bundle!!.getInt("lane", 0)
         var rating = bundle!!.getFloat("rating", 1.0F)
-        val position = bundle!!.getInt("position", 0)
+        val id = bundle!!.getInt("id", 0)
 
 //        parentFragmentManager.setFragmentResultListener("item_updated", viewLifecycleOwner) { _, bundle ->
 //            name = bundle.getString("name", "New person")
@@ -68,7 +68,7 @@ class DetailsFragment : Fragment() {
             bundle.putString("description", description)
             bundle.putInt("lane", lane)
             bundle.putFloat("rating", rating)
-            bundle.putInt("position", position)
+            bundle.putInt("id", id)
 
             findNavController().navigate(
                 R.id.action_detailsFragment_to_updateFragment,

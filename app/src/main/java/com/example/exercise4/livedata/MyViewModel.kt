@@ -1,5 +1,6 @@
 package com.example.exercise4.livedata
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +22,14 @@ class MyViewModel(private val repository: ListRepository) : ViewModel() {
     fun updateChampion(id: Int, name: String, description: String, lane: Int, rating: Float) {
         viewModelScope.launch {
             repository.updateChampion(id, name, description, lane, rating)
+            Log.d("MyViewModel", "updateChampion: $id, $name, $description, $lane, $rating")
+            _items.value = repository.getChampions()
+        }
+    }
+
+    fun update(champion: Champion) {
+        viewModelScope.launch {
+            repository.update(champion)
             _items.value = repository.getChampions()
         }
     }

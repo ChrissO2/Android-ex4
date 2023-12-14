@@ -72,13 +72,21 @@ class List4Fragment : Fragment() {
 
         parentFragmentManager.setFragmentResultListener("item_updated", viewLifecycleOwner) { _, bundle ->
             Log.d("List4Fragment", "onViewCreated item_updated: $bundle")
-            val itemName = bundle.getString("name", "Default name")
-            val itemDescription = bundle.getString("description", "No description")
-            val itemLane = bundle.getInt("lane", 0)
-            val itemRating = bundle.getFloat("rating", 1.0F)
-            val position = bundle.getInt("position", 0)
-            Log.d("List4Fragment", "onViewCreated item_updated: $position")
-            myViewModel.updateChampion(position, itemName, itemDescription, itemLane, itemRating)
+            run {
+                val itemName = bundle.getString("name", "Default name")
+                val itemDescription = bundle.getString("description", "No description")
+                val itemLane = bundle.getInt("lane", 0)
+                val itemRating = bundle.getFloat("rating", 1.0F)
+                val id = bundle.getInt("id", 0)
+                Log.d("List4Fragment", "onViewCreated item_updated: $id")
+//                val champion = Champion(itemName, itemDescription, itemLane, itemRating)
+//                champion.id = id
+//                myViewModel.update(champion)
+                Log.d("List4Fragment", "onViewCreated item_updated: $id, $itemName, $itemDescription, $itemLane, $itemRating")
+
+                myViewModel.updateChampion(id, itemName, itemDescription, itemLane, itemRating)
+            }
+
         }
 
         _binding.addChampionActionButton.setOnClickListener {
@@ -147,7 +155,6 @@ class List4Fragment : Fragment() {
                 bundle.putInt("lane", champion.lane)
                 bundle.putFloat("rating", champion.rating)
                 bundle.putInt("id", champion.id)
-                bundle.putInt("position", position)
 
                 findNavController().navigate(R.id.action_nav_list_view_db_to_detailsFragment, bundle)
             }

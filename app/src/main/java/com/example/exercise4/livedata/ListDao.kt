@@ -1,8 +1,10 @@
 package com.example.exercise4.livedata
 
+import android.util.Log
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
+import androidx.room.Update
 import androidx.room.Upsert
 import com.example.exercise4.data.Champion
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +24,14 @@ interface ListDao {
     @Query("SELECT * FROM champion_table")
     suspend fun getChampions(): MutableList<Champion>?
 
-    @Query("UPDATE champion_table SET name = :name, description = :description, lane = :lane, rating = :rating WHERE id = :id")
-    suspend fun updateChampion(id: Int, name: String, description: String, lane: Int, rating: Float)
+    @Query("UPDATE champion_table SET name = :name, description = :description, lane = :lane, rating = :rating WHERE id = :id;")
+    suspend fun updateChampion(id: Int, name: String, description: String, lane: Int, rating: Float){
+        Log.d("ListDao", "updateChampion: $id, $name, $description, $lane, $rating")
+    }
+
+    @Update
+    suspend fun update(champion: Champion) : Int {
+        Log.d("ListDao", "update: $champion")
+        return 0
+    }
 }

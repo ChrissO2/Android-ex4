@@ -14,10 +14,13 @@ import com.example.exercise4.databinding.FragmentUpdateBinding
 
 class UpdateFragment : Fragment() {
     private lateinit var binding: FragmentUpdateBinding
+    private lateinit var viewModel: MyViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {}
+        val repository = ListRepository.getInstance(requireContext())
+        viewModel = MyViewModel(repository)
     }
 
     override fun onCreateView(
@@ -35,7 +38,7 @@ class UpdateFragment : Fragment() {
         val description = bundle!!.getString("description", "No description")
         val lane = bundle!!.getInt("lane", 0)
         val rating = bundle!!.getFloat("rating", 1.0F)
-        val position = bundle!!.getInt("position", 0)
+        val id = bundle!!.getInt("id", 0)
 
         binding.updateName.text = Editable.Factory.getInstance().newEditable(name)
         binding.updateDesc.text = Editable.Factory.getInstance().newEditable(description)
@@ -66,10 +69,12 @@ class UpdateFragment : Fragment() {
             bundle.putString("description", newDesc)
             bundle.putInt("lane", newLane)
             bundle.putFloat("rating", newRating)
-            bundle.putInt("position", position)
+            bundle.putInt("id", id)
             Log.d("UpdateFragment", "onViewCreated: " + bundle.toString())
             parentFragmentManager.setFragmentResult("item_updated", bundle)
-            findNavController().popBackStack(R.id.nav_list_view_db, false)
+            viewModel.updateChampion(id, newName, newDesc, newLane, newRating)
+//            findNavController().popBackStack(R.id.nav_list_view_db, false)
+            findNavController().navigate(R.id.action_updateFragment_to_nav_list_view_db, bundle)
         }
 
         binding.updateCancelBtn.setOnClickListener {

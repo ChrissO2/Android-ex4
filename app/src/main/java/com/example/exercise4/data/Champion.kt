@@ -21,6 +21,14 @@ class Champion : Serializable {
         this.rating = rating
     }
 
+//    constructor(id: Int, name: String, description: String, lane: Int, rating: Float) {
+//        this.id = id
+//        this.name = name
+//        this.description = description
+//        this.lane = lane
+//        this.rating = rating
+//    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
