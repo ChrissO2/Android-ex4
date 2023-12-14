@@ -20,4 +20,19 @@ class Champion : Serializable {
         this.lane = lane
         this.rating = rating
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Champion
+
+        if (id != other.id) return false
+        if (name != other.name) return false
+        if (description != other.description) return false
+        if (lane != other.lane) return false
+        if (rating != other.rating) return false
+
+        return true
+    }
 }

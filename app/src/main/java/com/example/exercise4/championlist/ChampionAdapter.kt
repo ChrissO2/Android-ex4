@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exercise4.Lane
 import com.example.exercise4.R
@@ -115,9 +116,41 @@ class ChampionAdapter(var data: MutableList<Champion>, var dataRepo: ChampionRep
         fun onLongClick(position: Int, champion: Champion)
     }
 
-    class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+    open class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageview)
         val textView: TextView = itemView.findViewById(R.id.textView)
         val textView2: TextView = itemView.findViewById(R.id.textView2)
+    }
+
+    companion object {
+        // DiffUtil callback for calculating the difference between two lists
+        private val diffCallback = object : DiffUtil.ItemCallback<Champion>() {
+            override fun areItemsTheSame(oldItem: Champion, newItem: Champion): Boolean {
+                // Check if items represent the same object in the list
+                return oldItem.id == newItem.id // assuming you have an id property in Champion
+            }
+
+            override fun areContentsTheSame(oldItem: Champion, newItem: Champion): Boolean {
+                // Check if the item contents are the same, assuming you have equals() implemented in Champion
+                return oldItem == newItem
+            }
+        }
+
+        // Function to calculate the diff result and dispatch updates to the adapter
+//        fun updateData(newData: List<Champion>) {
+//            val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+//                override fun getOldListSize(): Int = data.size
+//                override fun getNewListSize(): Int = newData.size
+//                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+//                    diffCallback.areItemsTheSame(data[oldItemPosition], newData[newItemPosition])
+//
+//                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
+//                    diffCallback.areContentsTheSame(data[oldItemPosition], newData[newItemPosition])
+//            })
+//
+//            data.clear()
+//            data.addAll(newData)
+//            result.dispatchUpdatesTo(this)
+//        }
     }
 }

@@ -28,6 +28,11 @@
             android:icon="@drawable/icon_game"
             android:title= "DB recycler view" />
 
+        <item
+            android:id="@+id/nav_list_view_db"
+            android:icon="@drawable/icon_game"
+            android:title= "Live Data" />
+
 <!--        <item-->
 <!--            android:id="@+id/nav_swipe_images"-->
 <!--            android:icon="@drawable/icon_image"-->

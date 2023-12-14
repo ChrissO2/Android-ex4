@@ -63,5 +63,9 @@
         android:name="com.example.exercise4.tabs.PhotoFragment"
         android:label="fragment_photo"
         tools:layout="@layout/fragment_photo" />
+    <fragment
+        android:id="@+id/nav_list_view_db"
+        android:name="com.example.exercise4.livedata.List4Fragment"
+        android:label="List4Fragment" />
 
 </navigation>

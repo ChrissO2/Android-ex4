@@ -5,10 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
+import com.example.exercise4.livedata.ListDao
 
 @Database(entities = [Champion::class], version = 1, exportSchema = false)
 abstract class ChampionDB : RoomDatabase() {
     abstract fun championDao(): ChampionDao?
+
+    abstract fun listDao(): ListDao
     companion object {
         private var DB_INSTANCE: ChampionDB? = null
         @Synchronized
