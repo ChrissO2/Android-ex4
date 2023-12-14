@@ -24,10 +24,8 @@ interface ListDao {
     @Query("SELECT * FROM champion_table")
     suspend fun getChampions(): MutableList<Champion>?
 
-    @Query("UPDATE champion_table SET name = :name, description = :description, lane = :lane, rating = :rating WHERE id = :id;")
-    suspend fun updateChampion(id: Int, name: String, description: String, lane: Int, rating: Float){
-        Log.d("ListDao", "updateChampion: $id, $name, $description, $lane, $rating")
-    }
+    @Query("UPDATE champion_table SET name = :name, description = :description, lane = :lane, rating = :rating WHERE id = :id")
+    suspend fun updateChampion(id: Int, name: String, description: String, lane: Int, rating: Float)
 
     @Update
     suspend fun update(champion: Champion) : Int {
