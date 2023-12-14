@@ -1,11 +1,13 @@
 package com.example.exercise4.championlist
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.exercise4.Lane
 import com.example.exercise4.R
@@ -72,6 +74,16 @@ class ChampionAdapter(var data: MutableList<Champion>, var dataRepo: ChampionRep
                 notifyDataSetChanged()
             }
             true
+        }
+
+        Log.d("ChampionAdapter", "ItemsViewModel.rating: ${ItemsViewModel.rating}")
+
+        if (ItemsViewModel.rating > 2.5) {
+            val greenColor = ContextCompat.getColor(holder.itemView.context, R.color.green)
+            holder.itemView.setBackgroundColor(greenColor)
+        } else {
+            val redColor = ContextCompat.getColor(holder.itemView.context, R.color.red)
+            holder.itemView.setBackgroundColor(redColor)
         }
 
 

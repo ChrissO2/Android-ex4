@@ -2,6 +2,7 @@ package com.example.exercise4
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,14 @@ class HomeFragment : Fragment() {
         binding.welcomeTextView.text = welcome
         val author = data.getString("author", "Krzysztof Otreba 266541")
         binding.authorTextView.text = author
+        val img = data.getInt("img", 0)
+        Log.d("img", img.toString())
+        when (img) {
+            0 -> binding.imageView2.setImageResource(R.drawable.lee_sin)
+            1 -> binding.imageView2.setImageResource(R.drawable.lol2)
+            2 -> binding.imageView2.setImageResource(R.drawable.lol3)
+            else -> binding.imageView2.setImageResource(R.drawable.lee_sin)
+        }
     }
 
     override fun onDestroyView() {

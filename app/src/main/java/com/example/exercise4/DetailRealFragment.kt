@@ -42,9 +42,9 @@ class DetailRealFragment : Fragment() {
             val lane = champion?.lane
             val rating = champion?.rating
 
-            binding.textViewName.text = Editable.Factory.getInstance().newEditable(name)
-            binding.textViewDescription.text = Editable.Factory.getInstance().newEditable(description)
-            binding.ratingBarRating.rating = rating?.toFloat()!!
+            binding.textViewName.text = name
+            binding.textViewDescription.text = description
+            binding.textViewRating.text = "Rating: " + rating!!.toString()
             when (lane) {
                 0 -> {
                     binding.textViewLine.text = Editable.Factory.getInstance().newEditable("Top")

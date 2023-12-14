@@ -8,8 +8,13 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/icon_home"
             android:title="@string/menu_home" />
+<!--        <item-->
+<!--            android:id="@+id/nav_swipe_views"-->
+<!--            android:icon="@drawable/icon_swipe"-->
+<!--            android:title="@string/menu_swipe_views" />-->
+
         <item
-            android:id="@+id/nav_swipe_views"
+            android:id="@+id/nav_photo"
             android:icon="@drawable/icon_swipe"
             android:title="@string/menu_swipe_views" />
 
