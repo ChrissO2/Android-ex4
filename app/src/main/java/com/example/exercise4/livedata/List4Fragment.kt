@@ -44,8 +44,6 @@ class List4Fragment : Fragment() {
     ): View? {
         _binding = FragmentList4Binding.inflate(inflater, container, false)
 
-
-
         val recView = _binding.recyclerview
         recView.layoutManager = LinearLayoutManager(requireContext())
         val repository = ListRepository.getInstance(requireContext())
@@ -73,15 +71,14 @@ class List4Fragment : Fragment() {
         }
 
         parentFragmentManager.setFragmentResultListener("item_updated", viewLifecycleOwner) { _, bundle ->
-            if (bundle.getBoolean("edit")) {
-                val itemName = bundle.getString("name", "Default name")
-                val itemDescription = bundle.getString("description", "No description")
-                val itemLane = bundle.getInt("lane", 0)
-                val itemRating = bundle.getFloat("rating", 1.0F)
-                val newItem = Champion(itemName, itemDescription, itemLane, itemRating)
-                val pos = bundle.getInt("position")
-                myViewModel.updateChampion(pos, itemName, itemDescription, itemLane, itemRating)
-            }
+            Log.d("List4Fragment", "onViewCreated item_updated: $bundle")
+            val itemName = bundle.getString("name", "Default name")
+            val itemDescription = bundle.getString("description", "No description")
+            val itemLane = bundle.getInt("lane", 0)
+            val itemRating = bundle.getFloat("rating", 1.0F)
+            val position = bundle.getInt("position", 0)
+            Log.d("List4Fragment", "onViewCreated item_updated: $position")
+            myViewModel.updateChampion(position, itemName, itemDescription, itemLane, itemRating)
         }
 
         _binding.addChampionActionButton.setOnClickListener {
@@ -160,15 +157,11 @@ class List4Fragment : Fragment() {
                 true
             }
 
-            Log.d("List4Fragment", "champion.rating: ${champion.rating}")
-
             val backgroundColor = if (champion.rating > 2.5) {
                 ContextCompat.getColor(holder.itemView.context, R.color.green)
             } else {
                 ContextCompat.getColor(holder.itemView.context, R.color.red)
             }
-
-            Log.d("List4Fragment", "backgroundColor: $backgroundColor")
 
             holder.itemView.setBackgroundColor(backgroundColor)
 

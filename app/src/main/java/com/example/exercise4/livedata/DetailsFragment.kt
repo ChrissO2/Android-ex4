@@ -36,12 +36,48 @@ class DetailsFragment : Fragment() {
 
         val bundle = arguments
         Log.d("DetailsFragment", "onViewCreated: $bundle")
-        val name = bundle!!.getString("name", "Default name")
-        val description = bundle!!.getString("description", "No description")
-        val lane = bundle!!.getInt("lane", 0)
-        val rating = bundle!!.getFloat("rating", 1.0F)
+        var name = bundle!!.getString("name", "Default name")
+        var description = bundle!!.getString("description", "No description")
+        var lane = bundle!!.getInt("lane", 0)
+        var rating = bundle!!.getFloat("rating", 1.0F)
+        val position = bundle!!.getInt("position", 0)
 
+//        parentFragmentManager.setFragmentResultListener("item_updated", viewLifecycleOwner) { _, bundle ->
+//            name = bundle.getString("name", "New person")
+//            description = bundle.getString("description", "Some spec")
+//            lane = bundle.getInt("lane", 0)
+//            rating = bundle.getFloat("rating", 1.0F)
+//            myViewModel.updateChampion(position, name, description, lane, rating)
+//            updateViews(name, description, lane, rating)
+//            hasChanged = true
+//        }
 
+        updateViews(name, description, lane, rating)
+
+        binding.buttonReturn.setOnClickListener {
+            if (hasChanged) {
+                parentFragmentManager.setFragmentResult("item_updated", bundle)
+
+            }
+            findNavController().navigateUp()
+        }
+
+        binding.buttonModify.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("name", name)
+            bundle.putString("description", description)
+            bundle.putInt("lane", lane)
+            bundle.putFloat("rating", rating)
+            bundle.putInt("position", position)
+
+            findNavController().navigate(
+                R.id.action_detailsFragment_to_updateFragment,
+                bundle
+            )
+        }
+    }
+
+    private fun updateViews(name: String, description: String, lane: Int, rating: Float?) {
         binding.textViewName.text = name
         binding.textViewDescription.text = description
         binding.textViewRating.text = "Rating: " + rating!!.toString()
@@ -77,43 +113,13 @@ class DetailsFragment : Fragment() {
                 binding.imageViewLine.setImageResource(R.drawable.top_icon)
             }
         }
-
-        binding.buttonReturn.setOnClickListener {
-            if (hasChanged) {
-                val name = binding.textViewName.text.toString()
-                val description = binding.textViewDescription.text.toString()
-                val lane = binding.textViewLine.text.toString()
-                val rating = binding.textViewRating.text.toString()
-                val bundle = Bundle()
-                bundle.putString("name", name)
-                bundle.putString("description", description)
-                bundle.putInt("lane", lane.toInt())
-                bundle.putFloat("rating", rating.toFloat())
-                parentFragmentManager.setFragmentResult("item_updated", bundle)
-                findNavController().navigateUp()
-            }
-            requireActivity().onBackPressed()
-        }
-
-        binding.buttonModify.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("name", name)
-            bundle.putString("description", description)
-            bundle.putInt("lane", lane)
-            bundle.putFloat("rating", rating)
-
-            findNavController().navigate(
-                R.id.action_detailsFragment_to_updateFragment,
-                bundle
-            )
-        }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailsFragment().apply {
-                arguments = Bundle().apply {}
-            }
-    }
+//    companion object {
+//        @JvmStatic
+////        fun newInstance(param1: String, param2: String) =
+//////            DetailsFragment().apply {
+//////                arguments = Bundle().apply {}
+//////            }
+//    }
 }

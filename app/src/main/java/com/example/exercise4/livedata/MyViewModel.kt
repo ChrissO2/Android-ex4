@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.exercise4.data.Champion
 import kotlinx.coroutines.launch
+import java.io.Serializable
 
 class MyViewModel(private val repository: ListRepository) : ViewModel() {
     private val _items = MutableLiveData<List<Champion>>()

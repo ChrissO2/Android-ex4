@@ -35,6 +35,7 @@ class UpdateFragment : Fragment() {
         val description = bundle!!.getString("description", "No description")
         val lane = bundle!!.getInt("lane", 0)
         val rating = bundle!!.getFloat("rating", 1.0F)
+        val position = bundle!!.getInt("position", 0)
 
         binding.updateName.text = Editable.Factory.getInstance().newEditable(name)
         binding.updateDesc.text = Editable.Factory.getInstance().newEditable(description)
@@ -65,9 +66,10 @@ class UpdateFragment : Fragment() {
             bundle.putString("description", newDesc)
             bundle.putInt("lane", newLane)
             bundle.putFloat("rating", newRating)
+            bundle.putInt("position", position)
             Log.d("UpdateFragment", "onViewCreated: " + bundle.toString())
-            parentFragmentManager.setFragmentResult("edited", bundle)
-            findNavController().navigateUp().
+            parentFragmentManager.setFragmentResult("item_updated", bundle)
+            findNavController().popBackStack(R.id.nav_list_view_db, false)
         }
 
         binding.updateCancelBtn.setOnClickListener {
@@ -76,6 +78,7 @@ class UpdateFragment : Fragment() {
             bundle.putString("description", description)
             bundle.putInt("lane", lane)
             bundle.putFloat("rating", rating)
+            bundle.putBoolean("edit", false)
             parentFragmentManager.setFragmentResult("not_edited", bundle)
             findNavController().navigateUp()
         }
