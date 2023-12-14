@@ -135,22 +135,5 @@ class ChampionAdapter(var data: MutableList<Champion>, var dataRepo: ChampionRep
                 return oldItem == newItem
             }
         }
-
-        // Function to calculate the diff result and dispatch updates to the adapter
-//        fun updateData(newData: List<Champion>) {
-//            val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-//                override fun getOldListSize(): Int = data.size
-//                override fun getNewListSize(): Int = newData.size
-//                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-//                    diffCallback.areItemsTheSame(data[oldItemPosition], newData[newItemPosition])
-//
-//                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-//                    diffCallback.areContentsTheSame(data[oldItemPosition], newData[newItemPosition])
-//            })
-//
-//            data.clear()
-//            data.addAll(newData)
-//            result.dispatchUpdatesTo(this)
-//        }
     }
 }

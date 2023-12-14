@@ -66,6 +66,29 @@
     <fragment
         android:id="@+id/nav_list_view_db"
         android:name="com.example.exercise4.livedata.List4Fragment"
-        android:label="List4Fragment" />
+        android:label="List4Fragment" >
+        <action
+            android:id="@+id/action_nav_list_view_db_to_addFragment"
+            app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_nav_list_view_db_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.example.exercise4.livedata.AddFragment"
+        android:label="AddFragment" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.exercise4.livedata.DetailsFragment"
+        android:label="DetailsFragment" >
+        <action
+            android:id="@+id/action_detailsFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.exercise4.livedata.UpdateFragment"
+        android:label="UpdateFragment" />
 
 </navigation>

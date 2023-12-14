@@ -1,6 +1,7 @@
 package com.example.exercise4.livedata
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,13 @@ import com.example.exercise4.data.Champion
 import com.example.exercise4.databinding.FragmentList4Binding
 import com.example.exercise4.databinding.CardViewDesignBinding
 import android.widget.AdapterView.OnItemLongClickListener
+import androidx.navigation.fragment.findNavController
+import com.example.exercise4.championlist.ChampionAdapter
+import com.example.exercise4.championlist.ListChampionFragment
+import com.example.exercise4.data.ChampionRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class List4Fragment : Fragment() {
@@ -36,11 +44,13 @@ class List4Fragment : Fragment() {
     ): View? {
         _binding = FragmentList4Binding.inflate(inflater, container, false)
 
+
+
         val recView = _binding.recyclerview
         recView.layoutManager = LinearLayoutManager(requireContext())
         val repository = ListRepository.getInstance(requireContext())
         myViewModel = MyViewModel(repository)
-        adapter = MyAdapter(myViewModel.items)
+        adapter = MyAdapter(myViewModel.items, myViewModel)
         recView.adapter = adapter
 
         myViewModel.items.observe(viewLifecycleOwner, Observer { items ->
@@ -53,18 +63,16 @@ class List4Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        parentFragmentManager.setFragmentResultListener("addNewItem", viewLifecycleOwner) { _, bundle ->
-            if (bundle.getBoolean("toAdd")) {
-                val itemName = bundle.getString("name", "New person")
-                val itemDescription = bundle.getString("description", "Some spec")
-                val itemLane = bundle.getInt("lane", 0)
-                val itemRating = bundle.getFloat("rating", 1.0F)
-                val newItem = Champion(itemName, itemDescription, itemLane, itemRating)
-                myViewModel.addChampion(newItem)
-            }
+        parentFragmentManager.setFragmentResultListener("item_added", viewLifecycleOwner) { _, bundle ->
+            val itemName = bundle.getString("name", "New person")
+            val itemDescription = bundle.getString("description", "Some spec")
+            val itemLane = bundle.getInt("lane", 0)
+            val itemRating = bundle.getFloat("rating", 1.0F)
+            val newItem = Champion(itemName, itemDescription, itemLane, itemRating)
+            myViewModel.addChampion(newItem)
         }
 
-        parentFragmentManager.setFragmentResultListener("editItem", viewLifecycleOwner) { _, bundle ->
+        parentFragmentManager.setFragmentResultListener("item_updated", viewLifecycleOwner) { _, bundle ->
             if (bundle.getBoolean("edit")) {
                 val itemName = bundle.getString("name", "Default name")
                 val itemDescription = bundle.getString("description", "No description")
@@ -76,11 +84,15 @@ class List4Fragment : Fragment() {
             }
         }
 
+        _binding.addChampionActionButton.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_list_view_db_to_addFragment)
+        }
+
         setHasOptionsMenu(true)
     }
 
 
-    inner class MyAdapter(var data: LiveData<List<Champion>>) :
+    inner class MyAdapter(var data: LiveData<List<Champion>>, private val myViewModel: MyViewModel) :
         RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
         private var listener: AdapterView.OnItemClickListener? = null
@@ -105,6 +117,7 @@ class List4Fragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+            val position = holder.getAdapterPosition()
             val champion = data.value?.get(position) ?: return
 
             when(champion.lane){
@@ -128,7 +141,18 @@ class List4Fragment : Fragment() {
             holder.textView.text = champion.name
             holder.textView2.text = champion.description
 
+
             holder.itemView.setOnClickListener {
+                selectedItemIndex = position
+                val bundle = Bundle()
+                bundle.putString("name", champion.name)
+                bundle.putString("description", champion.description)
+                bundle.putInt("lane", champion.lane)
+                bundle.putFloat("rating", champion.rating)
+                bundle.putInt("id", champion.id)
+                bundle.putInt("position", position)
+
+                findNavController().navigate(R.id.action_nav_list_view_db_to_detailsFragment, bundle)
             }
 
             holder.itemView.setOnLongClickListener {
@@ -136,11 +160,15 @@ class List4Fragment : Fragment() {
                 true
             }
 
-            val backgroundColor = if (champion.rating <= 2.5) {
+            Log.d("List4Fragment", "champion.rating: ${champion.rating}")
+
+            val backgroundColor = if (champion.rating > 2.5) {
                 ContextCompat.getColor(holder.itemView.context, R.color.green)
             } else {
                 ContextCompat.getColor(holder.itemView.context, R.color.red)
             }
+
+            Log.d("List4Fragment", "backgroundColor: $backgroundColor")
 
             holder.itemView.setBackgroundColor(backgroundColor)
 
