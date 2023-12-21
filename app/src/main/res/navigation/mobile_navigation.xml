@@ -94,5 +94,15 @@
             android:id="@+id/action_updateFragment_to_nav_list_view_db"
             app:destination="@id/nav_list_view_db" />
     </fragment>
+    <fragment
+        android:id="@+id/imageOptionsFragment"
+        android:name="com.example.exercise4.images.ImageOptionsFragment"
+        android:label="fragment_image_options"
+        tools:layout="@layout/fragment_image_options" />
+    <fragment
+        android:id="@+id/imageLibraryFragment"
+        android:name="com.example.exercise4.images.ImageLibraryFragment"
+        android:label="fragment_image_library"
+        tools:layout="@layout/fragment_image_library" />
 
 </navigation>

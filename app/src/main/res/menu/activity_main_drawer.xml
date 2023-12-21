@@ -33,6 +33,11 @@
             android:icon="@drawable/icon_game"
             android:title= "Live Data" />
 
+        <item
+            android:id="@+id/imageLibraryFragment"
+            android:icon="@drawable/icon_game"
+            android:title= "Gallery" />
+
 <!--        <item-->
 <!--            android:id="@+id/nav_swipe_images"-->
 <!--            android:icon="@drawable/icon_image"-->

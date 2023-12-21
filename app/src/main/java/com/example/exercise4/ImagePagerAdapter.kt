@@ -35,15 +35,15 @@ class ImagePagerAdapter: PagerAdapter() {
         return view === `object` as LinearLayout
     }
 
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val itemView: View = mLayoutInflater!!.inflate(R.layout.image_item, container, false)
-
-        val imageView = itemView.findViewById<View>(R.id.imageViewMain) as ImageView
-
-        imageView.setImageResource(images[position])
-
-        Objects.requireNonNull(container).addView(itemView)
-        return itemView
-    }
+//    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+//        val itemView: View = mLayoutInflater!!.inflate(R.layout.image_item, container, false)
+//
+//        val imageView = itemView.findViewById<View>(R.id.imageViewMain) as ImageView
+//
+//        imageView.setImageResource(images[position])
+//
+//        Objects.requireNonNull(container).addView(itemView)
+//        return itemView
+//    }
 
 }

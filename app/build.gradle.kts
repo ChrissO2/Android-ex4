@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -65,8 +66,13 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-common-java8:2.6.2")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0")
+
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+
     api ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     api ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
     kapt("androidx.room:room-compiler:2.6.1")
+
+    kapt("com.github.bumptech.glide:compiler:4.11.0")
 }
